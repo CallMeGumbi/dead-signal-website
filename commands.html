@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commands - Dead Signal</title>
+    <meta name="description" content="Player commands for the Dead Signal Rust server, including essential quality of life commands every survivor should know.">
+    <meta name="keywords" content="Dead Signal, Rust commands, player commands, server commands, PvE">
+    <meta name="author" content="Dead Signal">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#111111">
+    <!-- TODO: Replace og:url, canonical, and og:image with absolute URLs once the final GitHub Pages / custom domain URL is known -->
+    <link rel="canonical" href="/commands.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/commands.html">
+    <meta property="og:site_name" content="Dead Signal">
+    <meta property="og:title" content="Commands - Dead Signal">
+    <meta property="og:description" content="Player commands for the Dead Signal Rust server.">
+    <meta property="og:image" content="profile.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Commands - Dead Signal">
+    <meta name="twitter:description" content="Player commands for the Dead Signal Rust server.">
+    <meta name="twitter:image" content="profile.png">
+    <link rel="icon" type="image/png" href="profile.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="fog-overlay"></div>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>DEAD SIGNAL</h1>
+                <p class="tagline">The Signal Never Dies</p>
+            </div>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="rules.html">Rules</a></li>
+                <li><a href="faq.html">FAQ</a></li>
+                <li><a href="commands.html" class="active">Commands</a></li>
+                <li><a href="resources.html">Resources</a></li>
+                <li><a href="index.html#discord" class="nav-discord-link">
+                    <img src="Discord-Symbol-White.png" alt="Discord" class="nav-discord-icon">
+                    Discord
+                </a></li>
+                <li><a href="index.html#connect">Connect</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section class="section dark-section">
+        <div class="container">
+            <h2 class="section-title">Player Commands</h2>
+            <p class="section-subtitle">Every command available to survivors. Transmitted in the clear.</p>
+
+            <div class="terminal-box highlight-box">
+                <div class="box-header">[SYSTEM]: ESSENTIAL QUALITY OF LIFE COMMANDS</div>
+                <div class="box-content">
+                    <p><span class="system-tag">[PRIORITY]:</span> Every survivor should know these commands. Learn them before you need them.</p>
+                    <br>
+                    <p><code>/purge</code> — Check the Signal Collapse countdown and current purge status.</p>
+                    <!-- PLACEHOLDER: Add remaining essential QoL commands below -->
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                </div>
+            </div>
+
+            <div class="terminal-box">
+                <div class="box-header">[SYSTEM]: FULL COMMAND REFERENCE</div>
+                <div class="box-content">
+                    <p><span class="system-tag">[DIRECTORY]:</span> Complete list of all commands available to every player on the server.</p>
+                    <br>
+                    <!-- PLACEHOLDER: Full alphabetical command list goes here -->
+                    <p><code>/purge</code> — Check the Signal Collapse countdown and current purge status.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <p><code>/command</code> — [PLACEHOLDER] Description of what this command does.</p>
+                    <br>
+                    <p><span class="warning-tag">[NOTICE]:</span> This page is under construction. More commands will be documented soon.</p>
+                </div>
+            </div>
+
+            <div class="back-link">
+                <a href="index.html" class="btn">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-top">
+                <div class="footer-left">
+                    <a href="index.html">Home</a>
+                    <a href="index.html#about">About</a>
+                    <a href="rules.html">Rules</a>
+                    <a href="faq.html">FAQ</a>
+                    <a href="commands.html">Commands</a>
+                    <a href="resources.html">Resources</a>
+                    <a href="index.html#discord" class="footer-discord-link">
+                        <img src="Discord-Symbol-White.png" alt="Discord" class="footer-discord-icon">
+                        Discord
+                    </a>
+                    <a href="index.html#connect">Connect</a>
+                </div>
+                <div class="footer-right">
+                    <img src="profile.png" alt="Server Profile" class="footer-profile">
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Dead Signal Rust Server. The signal never dies.</p>
+                <p class="footer-note">Survival is not guaranteed.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script>
+        // Hamburger menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Parallax effect for fog
+        document.addEventListener('mousemove', (e) => {
+            const fog = document.querySelector('.fog-overlay');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            fog.style.transform = `translate(${x * 20}px, ${y * 20}px)`;
+        });
+    </script>
+</body>
+</html>

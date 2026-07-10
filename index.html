@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dead Signal - Rust Server</title>
+    <meta name="description" content="Dead Signal is a cooperative PvE Rust server with no decay, no offline raiding, vanilla progression, monthly wipes, and the Signal Collapse pre-wipe PvP event. The signal never dies.">
+    <meta name="keywords" content="Dead Signal, Rust server, PvE, no decay, no offline raid, vanilla progression, monthly wipe, Signal Collapse, community server">
+    <meta name="author" content="Dead Signal">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#111111">
+    <!-- TODO: Replace og:url, canonical, and og:image with absolute URLs once the final GitHub Pages / custom domain URL is known -->
+    <link rel="canonical" href="/">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/">
+    <meta property="og:site_name" content="Dead Signal">
+    <meta property="og:title" content="Dead Signal - Rust Server">
+    <meta property="og:description" content="Cooperative PvE Rust server. No decay, no offline raiding, vanilla progression, monthly wipes, and the Signal Collapse pre-wipe PvP event.">
+    <meta property="og:image" content="profile.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Dead Signal - Rust Server">
+    <meta name="twitter:description" content="Cooperative PvE Rust server. No decay, no offline raiding, vanilla progression, monthly wipes.">
+    <meta name="twitter:image" content="profile.png">
+    <link rel="icon" type="image/png" href="profile.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -28,6 +46,7 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="rules.html">Rules</a></li>
                 <li><a href="faq.html">FAQ</a></li>
+                <li><a href="commands.html">Commands</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="#discord" class="nav-discord-link">
                     <img src="Discord-Symbol-White.png" alt="Discord" class="nav-discord-icon">
@@ -132,7 +151,8 @@
                 <div class="box-header">[SYSTEM]: SIGNAL COLLAPSE INFO</div>
                 <div class="box-content">
                     <p><span class="system-tag">[EVENT]:</span> Monthly pre-wipe PvP activation</p>
-                    <p><span class="system-tag">[TIMING]:</span> 24 hours before global wipe</p>
+                    <p><span class="system-tag">[TIMING]:</span> 48 hours before global wipe</p>
+                    <p><span class="system-tag">[NEXT WIPE]:</span> <span id="about-next-wipe">Calculating...</span></p>
                     <p><span class="system-tag">[PROTOCOL]:</span> All restrictions lifted. Total chaos authorized.</p>
                     <br>
                     <p><a href="faq.html" style="color: var(--text-terminal);">→ Full details in FAQ</a></p>
@@ -213,6 +233,13 @@
                         Join Discord Server
                     </a>
                 </div>
+                <div class="discord-widget">
+                    <iframe src="https://discord.com/widget?id=1505011120585314528&theme=dark" 
+                            width="350" height="500" 
+                            allowtransparency="true" frameborder="0" 
+                            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
+                            title="Dead Signal Discord widget"></iframe>
+                </div>
             </div>
         </div>
     </section>
@@ -223,7 +250,7 @@
             <div class="connect-info">
                 <div class="server-ip">
                     <p class="ip-label">SERVER IP</p>
-                    <p class="ip-address">47.25.226.71:28015</p>
+                    <p class="ip-address"><span class="server-ip-value">47.25.226.71:28015</span></p>
                     <button class="copy-btn" onclick="copyIP()">Copy IP</button>
                     <p class="ip-hint">Press F1, then type: client.connect [IP]</p>
                 </div>
@@ -238,7 +265,7 @@
                     </div>
                     <div class="detail-item">
                         <span class="detail-label">Wipe Schedule:</span>
-                        <span class="detail-value">First Thursday Monthly</span>
+                        <span class="detail-value" id="wipe-schedule">First Thursday Monthly</span>
                     </div>
                 </div>
                 <div class="battlemetrics-banner">
@@ -258,6 +285,7 @@
                     <a href="#about">About</a>
                     <a href="rules.html">Rules</a>
                     <a href="faq.html">FAQ</a>
+                    <a href="commands.html">Commands</a>
                     <a href="resources.html">Resources</a>
                     <a href="#discord" class="footer-discord-link">
                         <img src="Discord-Symbol-White.png" alt="Discord" class="footer-discord-icon">
@@ -276,56 +304,74 @@
         </div>
     </footer>
 
+    <script src="config.js"></script>
     <script>
-        function copyIP() {
-            const ip = "47.25.226.71:28015";
-            navigator.clipboard.writeText(ip).then(() => {
-                alert("Server IP copied to clipboard!");
-            });
-        }
-
         // Signal Collapse Countdown
         function getFirstThursday(year, month) {
-            const date = new Date(year, month, 1);
-            const dayOfWeek = date.getDay();
-            const daysUntilThursday = (4 - dayOfWeek + 7) % 7;
-            const firstThursday = new Date(year, month, 1 + daysUntilThursday);
-            // Set to 11:00 AM PST (Rust wipe time)
-            firstThursday.setHours(11, 0, 0, 0);
-            return firstThursday;
+            // Find the first Thursday of the month using UTC to avoid local timezone skew
+            const first = new Date(Date.UTC(year, month, 1));
+            const dayOfWeek = first.getUTCDay();
+            const day = 1 + ((4 - dayOfWeek + 7) % 7);
+            // Target 11:00 AM Pacific (Rust wipe time). Start from 19:00 UTC (11 AM PST),
+            // then correct for daylight saving using the actual Pacific hour at that instant.
+            let candidate = new Date(Date.UTC(year, month, day, 19, 0, 0));
+            const pacificHour = parseInt(new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Los_Angeles',
+                hour: 'numeric',
+                hour12: false
+            }).format(candidate), 10);
+            candidate = new Date(candidate.getTime() + (11 - pacificHour) * 60 * 60 * 1000);
+            return candidate;
+        }
+
+        function formatWipeDate(date) {
+            return new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Los_Angeles',
+                weekday: 'long',
+                month: 'short',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            }).format(date);
+        }
+
+        function getPacificYearMonth(date) {
+            // Get year/month in the server's wipe timezone (America/Los_Angeles)
+            const parts = new Intl.DateTimeFormat('en-US', {
+                timeZone: 'America/Los_Angeles',
+                year: 'numeric',
+                month: 'numeric'
+            }).formatToParts(date);
+            const get = (type) => parseInt(parts.find(p => p.type === type).value, 10);
+            return { year: get('year'), month: get('month') - 1 };
         }
 
         function getNextWipeDate() {
             const now = new Date();
-            const currentYear = now.getFullYear();
-            const currentMonth = now.getMonth();
-            
-            let firstThursday = getFirstThursday(currentYear, currentMonth);
-            
-            // If we're past the first Thursday of this month, get next month's
-            if (now > firstThursday) {
-                const nextMonth = currentMonth + 1;
-                const nextYear = nextMonth > 11 ? currentYear + 1 : currentYear;
-                firstThursday = getFirstThursday(nextYear, nextMonth % 12);
+            // Use Pacific year/month so the wipe date is correct regardless of visitor's local time
+            const { year, month } = getPacificYearMonth(now);
+            let wipeDate = getFirstThursday(year, month);
+            if (now >= wipeDate) {
+                wipeDate = getFirstThursday(year, month + 1);
             }
-            
-            return firstThursday;
+            return wipeDate;
         }
 
         function updateCountdown() {
             const wipeDate = getNextWipeDate();
-            const signalCollapseDate = new Date(wipeDate.getTime() - (24 * 60 * 60 * 1000)); // 24 hours before wipe
+            const signalCollapseDate = new Date(wipeDate.getTime() - (48 * 60 * 60 * 1000)); // 48 hours before wipe
             const now = new Date();
             
             const countdownLabel = document.getElementById('countdown-label');
             const countdownSub = document.getElementById('countdown-sub');
             const countdownStatus = document.getElementById('countdown-status');
             
-            // Check if Signal Collapse is active (within 24 hours of wipe)
+            // Check if Signal Collapse is active (within 48 hours of wipe)
             if (now >= signalCollapseDate && now < wipeDate) {
                 countdownLabel.textContent = '⚠️ SIGNAL COLLAPSE ACTIVE ⚠️';
                 countdownLabel.classList.add('active');
-                countdownSub.innerHTML = 'PvP authorized. Total chaos until wipe. | <a href="faq.html#signal-collapse" class="countdown-link">Learn more</a>';
+                countdownSub.innerHTML = 'PvP authorized. Total chaos until wipe at ' + formatWipeDate(wipeDate) + '. | <a href="faq.html#signal-collapse" class="countdown-link">Learn more</a>';
                 countdownStatus.textContent = '[PROTOCOL]: PvP AUTHORIZATION ACTIVE';
                 countdownStatus.classList.add('active');
                 
@@ -334,55 +380,39 @@
                 return;
             }
             
-            // Check if wipe has passed, reset to next month
-            if (now >= wipeDate) {
-                const nextMonth = wipeDate.getMonth() + 1;
-                const nextYear = nextMonth > 11 ? wipeDate.getFullYear() + 1 : wipeDate.getFullYear();
-                const nextWipe = getFirstThursday(nextYear, nextMonth % 12);
-                const nextSignalCollapse = new Date(nextWipe.getTime() - (24 * 60 * 60 * 1000));
-                
-                const diff = nextSignalCollapse - now;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                countdownLabel.textContent = 'SIGNAL COLLAPSE IN';
-                countdownLabel.classList.remove('active');
-                countdownSub.innerHTML = 'Next wipe: First Thursday of month | <a href="faq.html#signal-collapse" class="countdown-link">Learn more</a>';
-                countdownStatus.textContent = '[PROTOCOL]: PvP AUTHORIZATION PENDING';
-                countdownStatus.classList.remove('active');
-                document.getElementById('countdown-timer').style.display = 'flex';
-                
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-            } else {
-                // Normal countdown to Signal Collapse
-                const diff = signalCollapseDate - now;
-                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
-                countdownLabel.textContent = 'SIGNAL COLLAPSE IN';
-                countdownLabel.classList.remove('active');
-                countdownSub.innerHTML = 'Next wipe: First Thursday of month | <a href="faq.html#signal-collapse" class="countdown-link">Learn more</a>';
-                countdownStatus.textContent = '[PROTOCOL]: PvP AUTHORIZATION PENDING';
-                countdownStatus.classList.remove('active');
-                document.getElementById('countdown-timer').style.display = 'flex';
-                
-                document.getElementById('days').textContent = String(days).padStart(2, '0');
-                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
-                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
-                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
-            }
+            // Normal countdown to Signal Collapse
+            const diff = signalCollapseDate - now;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            countdownLabel.textContent = 'SIGNAL COLLAPSE IN';
+            countdownLabel.classList.remove('active');
+            countdownSub.innerHTML = 'Next wipe: ' + formatWipeDate(wipeDate) + ' | <a href="faq.html#signal-collapse" class="countdown-link">Learn more</a>';
+            countdownStatus.textContent = '[PROTOCOL]: PvP AUTHORIZATION PENDING';
+            countdownStatus.classList.remove('active');
+            document.getElementById('countdown-timer').style.display = 'flex';
+
+            document.getElementById('days').textContent = String(days).padStart(2, '0');
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
 
         // Update countdown every second
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Dynamic wipe schedule in the Connect section and About section
+        const wipeScheduleEl = document.getElementById('wipe-schedule');
+        if (wipeScheduleEl) {
+            wipeScheduleEl.textContent = formatWipeDate(getNextWipeDate());
+        }
+        const aboutNextWipeEl = document.getElementById('about-next-wipe');
+        if (aboutNextWipeEl) {
+            aboutNextWipeEl.textContent = formatWipeDate(getNextWipeDate());
+        }
 
         // Hamburger menu toggle
         const hamburger = document.querySelector('.hamburger');

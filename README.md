@@ -14,21 +14,22 @@ An eerie, paranormal-themed website for the Dead Signal Rust server. Built with 
 
 ## Customization
 
-### Server IP
-Update the server IP in `index.html`:
-```html
-<p class="ip-address">connect deadsignal.rust.server:28015</p>
-```
-And in the JavaScript copy function:
+### Server IP & Discord Config
+Site-wide values are centralized in `config.js`:
 ```javascript
-const ip = "connect deadsignal.rust.server:28015";
+const SERVER_IP = "47.25.226.71:28015";
+const DISCORD_SERVER_ID = "YOUR_DISCORD_SERVER_ID";
+const DISCORD_INVITE = "https://discord.gg/YOUR_DISCORD_INVITE";
 ```
+Update these once and every page that uses `.server-ip-value`, `copyIP()`, or the Discord widget will reflect the changes.
 
-### Discord Invite
-Replace `YOUR_DISCORD_INVITE` in `index.html` with your actual Discord invite code:
-```html
-<a href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank" class="btn discord-btn">
+### Discord Invite & Widget
+Replace `YOUR_DISCORD_INVITE` and `YOUR_DISCORD_SERVER_ID` in `config.js`:
+```javascript
+const DISCORD_SERVER_ID = "YOUR_DISCORD_SERVER_ID";
+const DISCORD_INVITE = "https://discord.gg/YOUR_DISCORD_INVITE";
 ```
+Make sure the **Server Widget** is enabled in Discord under Server Settings → Widget, or the iframe will not load.
 
 ### Player Rankings
 The rankings section currently has placeholder data. To integrate real server data, you can:
@@ -40,8 +41,9 @@ The rankings section currently has placeholder data. To integrate real server da
 Update server-specific information in the Connect section:
 - Max Players
 - Map type
-- Wipe Schedule
 - Group Limit
+
+The **Wipe Schedule** is now dynamic: the homepage countdown automatically calculates the first Thursday of the month at 11:00 AM Pacific (PST/PDT) and updates the displayed date.
 
 ## Deployment to GitHub Pages
 
@@ -97,6 +99,7 @@ To use a custom domain (e.g., `deadsignal.com`):
 dead-signal-website/
 ├── index.html          # Main HTML file
 ├── styles.css          # All styling and animations
+├── config.js           # Centralized server config (IP, Discord, etc.)
 ├── .nojekyll           # Disables Jekyll processing
 └── README.md           # This file
 ```

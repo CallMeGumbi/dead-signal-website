@@ -4,6 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAQ - Dead Signal</title>
+    <meta name="description" content="Frequently asked questions about the Dead Signal Rust server: how to join, wipe schedule, the Signal Collapse event, raiding rules, and more.">
+    <meta name="keywords" content="Dead Signal, FAQ, Rust server, PvE, wipe schedule, Signal Collapse, rules">
+    <meta name="author" content="Dead Signal">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#111111">
+    <!-- TODO: Replace og:url, canonical, and og:image with absolute URLs once the final GitHub Pages / custom domain URL is known -->
+    <link rel="canonical" href="/faq.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/faq.html">
+    <meta property="og:site_name" content="Dead Signal">
+    <meta property="og:title" content="FAQ - Dead Signal">
+    <meta property="og:description" content="How to join, wipe schedule, the Signal Collapse event, raiding rules, and more.">
+    <meta property="og:image" content="profile.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="FAQ - Dead Signal">
+    <meta name="twitter:description" content="How to join, wipe schedule, the Signal Collapse event, raiding rules, and more.">
+    <meta name="twitter:image" content="profile.png">
+    <link rel="icon" type="image/png" href="profile.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&family=Roboto+Condensed:wght@400;700&display=swap" rel="stylesheet">
 </head>
@@ -26,6 +44,7 @@
                 <li><a href="index.html#about">About</a></li>
                 <li><a href="rules.html">Rules</a></li>
                 <li><a href="faq.html" class="active">FAQ</a></li>
+                <li><a href="commands.html">Commands</a></li>
                 <li><a href="resources.html">Resources</a></li>
                 <li><a href="index.html#discord" class="nav-discord-link">
                     <img src="Discord-Symbol-White.png" alt="Discord" class="nav-discord-icon">
@@ -45,7 +64,7 @@
                 <div class="faq-item">
                     <h3 class="faq-question">How do I join the server?</h3>
                     <div class="faq-answer">
-                        <p><span class="system-tag">[METHOD]:</span> Press F1 in Rust, then type <code>client.connect 47.25.226.71:28015</code> and press Enter. Alternatively, find "Dead Signal" in the community server list or use the direct connect button on our homepage.</p>
+                        <p><span class="system-tag">[METHOD]:</span> Press F1 in Rust, then type <code>client.connect <span class="server-ip-value">47.25.226.71:28015</span></code> and press Enter. Alternatively, find "Dead Signal" in the community server list or use the direct connect button on our homepage.</p>
                     </div>
                 </div>
 
@@ -59,20 +78,20 @@
                 <div class="faq-item">
                     <h3 class="faq-question">When does the server wipe?</h3>
                     <div class="faq-answer">
-                        <p><span class="system-tag">[SCHEDULE]:</span> First Thursday of every month, following the global Rust force wipe schedule. The Signal Collapse PvP event begins exactly 24 hours before the wipe.</p>
-                        <p><span class="warning-tag">⏱️ TRACK:</span> Type <code>/signal time</code> in-game to see the countdown, or check <a href="https://www.rustforcewipe.com/" target="_blank" style="color: var(--text-terminal);">Rust Force Wipe</a> for the global schedule.</p>
+                        <p><span class="system-tag">[SCHEDULE]:</span> First Thursday of every month, following the global Rust force wipe schedule. The Signal Collapse PvP event begins exactly 48 hours before the wipe.</p>
+                        <p><span class="warning-tag">⏱️ TRACK:</span> Type <code>/purge</code> in-game to see the countdown, or check <a href="https://www.rustforcewipe.com/" target="_blank" style="color: var(--text-terminal);">Rust Force Wipe</a> for the global schedule.</p>
                     </div>
                 </div>
 
                 <div class="faq-item" id="signal-collapse">
                     <h3 class="faq-question">What is the Signal Collapse event?</h3>
                     <div class="faq-answer">
-                        <p><span class="error-tag">[EVENT]:</span> 24 hours before each wipe, all safety protocols dissolve. Total PvP is authorized. Raid every base, tear down every wall, claim everything. This is your chance to go all-out before the reset. The signal dies. Survive.</p>
+                        <p><span class="error-tag">[EVENT]:</span> 48 hours before each wipe, all safety protocols dissolve. Total PvP is authorized. Raid every base, tear down every wall, claim everything. This is your chance to go all-out before the reset. The signal dies. Survive.</p>
                         <br>
-                        <p><span class="system-tag">[TIMING]:</span> Begins exactly 24 hours before the global wipe (first Thursday of each month at 11:00 AM PST). Ends when the wipe occurs.</p>
+                        <p><span class="system-tag">[TIMING]:</span> Begins exactly 48 hours before the global wipe (first Thursday of each month at 11:00 AM PST). Ends when the wipe occurs.</p>
                         <p><span class="system-tag">[AUTHORIZED]:</span> All raids, base destruction, tool cupboard raids, door raids, and PvP combat are permitted. No restrictions.</p>
                         <p><span class="system-tag">[PROHIBITED]:</span> Cheating, hacking, toxicity, and harassment remain banned. Event PvP does not excuse rule violations.</p>
-                        <p><span class="system-tag">[TRACKING]:</span> Use <code>/signal time</code> in-game to see the countdown. The homepage also displays a live timer.</p>
+                        <p><span class="system-tag">[TRACKING]:</span> Use <code>/purge</code> in-game to see the countdown. The homepage also displays a live timer.</p>
                         <p><span class="warning-tag">[STRATEGY]:</span> This is your opportunity to use accumulated resources for maximum destruction. Stockpile explosives, coordinate with allies, and prepare for chaos. After the wipe, everything resets.</p>
                     </div>
                 </div>
@@ -81,7 +100,7 @@
                     <h3 class="faq-question">Can I raid other players?</h3>
                     <div class="faq-answer">
                         <p><span class="system-tag">[PROTOCOL]:</span> <strong>NO</strong> - Raids are strictly prohibited outside of active PvP zones and the Signal Collapse event. This includes tool cupboard raids, door raids, and any form of base intrusion outside of PvP zones. Violations will result in removal.</p>
-                        <p class="rule-emphasis">Exceptions: Dynamic PvP zones triggered by supply signals, time locked crates, supply drops, and Large Oil Rig, and the Signal Collapse event (24 hours before wipe).</p>
+                        <p class="rule-emphasis">Exceptions: Dynamic PvP zones triggered by supply signals, time locked crates, supply drops, and Large Oil Rig, and the Signal Collapse event (48 hours before wipe).</p>
                     </div>
                 </div>
 
@@ -114,15 +133,15 @@
                 <div class="faq-item">
                     <h3 class="faq-question">What plugins does the server use?</h3>
                     <div class="faq-answer">
-                        <p><span class="system-tag">[MODIFICATIONS]:</span> We run custom-coded plugins and administration tools built specifically for this community. Features include the Signal Collapse countdown, custom commands like <code>/signal time</code>, and unique administration tools. We maintain a vanilla progression feel with quality-of-life enhancements.</p>
+                        <p><span class="system-tag">[MODIFICATIONS]:</span> We run custom-coded plugins and administration tools built specifically for this community. Features include the Signal Collapse countdown, custom commands like <code>/purge</code>, and unique administration tools. We maintain a vanilla progression feel with quality-of-life enhancements.</p>
                     </div>
                 </div>
 
                 <div class="faq-item">
                     <h3 class="faq-question">Can I claim monuments or puzzle areas?</h3>
                     <div class="faq-answer">
-                        <p><span class="system-tag">[MONUMENTS]:</span> While you cannot claim exclusive ownership over monuments, we have a custom plugin to help coordinate monument runs. Use <code>/claim "location name"</code> to announce you are running a monument. This creates a 30-minute timer and alerts other players if they try to claim the same location.</p>
-                        <p><span class="system-tag">[PURPOSE]:</span> This system provides context for admins to settle disputes between players. It does not actively prevent others from visiting the monument—loot remains first come, first serve.</p>
+                        <p><span class="system-tag">[MONUMENTS]:</span> You cannot claim exclusive ownership over monuments or puzzle areas. If you plan to run a monument, announce it in chat so other players can coordinate with you and avoid conflicts.</p>
+                        <p><span class="system-tag">[PURPOSE]:</span> Chat announcements provide context for admins to settle disputes between players. They do not prevent others from visiting the monument—loot remains first come, first serve.</p>
                         <p><span class="system-tag">[LOOT]:</span> If you use your own keycards or resources to access secured loot, that loot is yours. Public loot (CH-47 hackable crates) is first come, first serve unless players agree otherwise.</p>
                     </div>
                 </div>
@@ -192,6 +211,7 @@
                     <a href="index.html#about">About</a>
                     <a href="rules.html">Rules</a>
                     <a href="faq.html">FAQ</a>
+                    <a href="commands.html">Commands</a>
                     <a href="resources.html">Resources</a>
                     <a href="index.html#discord" class="footer-discord-link">
                         <img src="Discord-Symbol-White.png" alt="Discord" class="footer-discord-icon">
@@ -210,6 +230,7 @@
         </div>
     </footer>
 
+    <script src="config.js"></script>
     <script>
         // Hamburger menu toggle
         const hamburger = document.querySelector('.hamburger');
